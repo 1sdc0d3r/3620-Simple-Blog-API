@@ -1,9 +1,21 @@
 from django.db.models.base import ValidationError
 from rest_framework import serializers
-from library.models import Author
+from library.models import Author, Book, Loan
+
+class LoanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Loan
+        fields = '__all__'
+
+class BookSerializer(serializers.ModelSerializer):
+    loan = LoanSerializer(many=True, read_only=True)
+    class Meta:
+        model = Book
+        fields = '__all__'
 
 class AuthorSerializer(serializers.ModelSerializer):
     name_len = serializers.SerializerMethodField()
+    book = BookSerializer(many=True, read_only=True)
 
     class Meta:
         model = Author
@@ -17,7 +29,6 @@ class AuthorSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Name is too short.")
         else:
             return data
-
 
 '''
 # def name_length(value):
