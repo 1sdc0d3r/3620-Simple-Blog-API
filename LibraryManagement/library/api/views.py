@@ -5,7 +5,7 @@ from library.api.serializers import AuthorSerializer
 
 @api_view(['GET', 'POST'])
 # @api_view()
-def get_authors(req):
+def authors(req):
     match req.method:
         case 'GET':
             authors = Author.objects.all()
@@ -20,8 +20,21 @@ def get_authors(req):
                 return Response(cereal.errors)
 
 
-# @api_view()
-# def blog_post(req, id):
-#     post = Blog.objects.get(pk=id)
-#     bs = BlogSerializer(post)
-#     return Response(bs.data)
+@api_view(['GET', 'PUT', 'DELETE'])
+def author(req, id):
+    author = Author.objects.get(pk=id)
+    match req.method:
+        case 'GET':
+            cereal = AuthorSerializer(author)
+            return Response(cereal.data)
+
+        case 'PUT':
+            cereal = AuthorSerializer(author, data=req.data)
+            if cereal.is_valid():
+                cereal.save()
+                return Response(cereal.data)
+            else:
+                return Response(cereal.errors)
+
+        case 'DELETE':
+            pass
