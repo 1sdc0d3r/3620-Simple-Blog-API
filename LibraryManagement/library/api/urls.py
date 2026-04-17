@@ -1,7 +1,7 @@
 from django.urls import path, include
-# from library.api.views import blog_posts,blog_post
+from library.api.views import get_authors
 
 urlpatterns = [
-    # path('posts/', blog_posts, name='blog-posts'),
+    path('authors/', get_authors, name='authors'),
     # path('posts/<int:id>', blog_post, name='blog-post'),
 ]
