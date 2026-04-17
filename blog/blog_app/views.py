@@ -13,11 +13,8 @@ def blog_posts(req):
     return JsonResponse(data)
 
 def blog_post(req, id):
-    # req.params.id
-    # posts = Blog.objects.all()
     post = Blog.objects.get(pk=id)
-    print(post.title)
-    # return JsonResponse({'post': post})
+
     data = {
         'title': post.title,
         'content': post.content,
