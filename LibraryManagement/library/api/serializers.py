@@ -8,14 +8,19 @@ class LoanSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class BookSerializer(serializers.ModelSerializer):
-    loan = LoanSerializer(many=True, read_only=True)
+    # loan = LoanSerializer(many=True, read_only=True)
+    # loan = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    # loan = serializers.StringRelatedField(many=True)
+    loan = serializers.HyperlinkedRelatedField(
+        many=True, read_only=True, view_name='loan-detail'
+    )
     class Meta:
         model = Book
         fields = '__all__'
 
 class AuthorSerializer(serializers.ModelSerializer):
     name_len = serializers.SerializerMethodField()
-    book = BookSerializer(many=True, read_only=True)
+    book = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Author

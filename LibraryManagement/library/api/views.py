@@ -20,17 +20,17 @@ class AuthorList(APIView):
             return Response(cereal.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AuthorDetail(APIView):
-    def get(self,req,id):
+    def get(self,req,pk):
         try:
-            author = Author.objects.get(pk=id)
+            author = Author.objects.get(pk=pk)
         except:
             return Response({'Error': "Author not found"}, status=status.HTTP_404_NOT_FOUND)
         cereal = AuthorSerializer(author)
         return Response(cereal.data)
 
-    def put(self,req,id):
+    def put(self,req,pk):
         try:
-            author = Author.objects.get(pk=id)
+            author = Author.objects.get(pk=pk)
         except:
             return Response({'Error': "Author not found"}, status=status.HTTP_404_NOT_FOUND)
         cereal = AuthorSerializer(author, data=req.data)
@@ -40,9 +40,9 @@ class AuthorDetail(APIView):
         else:
             return Response(cereal.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self,req,id):
+    def delete(self,req,pk):
         try:
-            author = Author.objects.get(pk=id)
+            author = Author.objects.get(pk=pk)
         except:
             return Response({'Error': "Author not found"}, status=status.HTTP_404_NOT_FOUND)
         author.delete()
@@ -52,7 +52,7 @@ class AuthorDetail(APIView):
 class BookList(APIView):
     def get(self,req):
         books = Book.objects.all()
-        cereal = BookSerializer(books, many=True)
+        cereal = BookSerializer(books, many=True, context={'request': req})
         return Response(cereal.data)
 
     def post(self,req):
@@ -64,17 +64,17 @@ class BookList(APIView):
             return Response(cereal.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class BookDetail(APIView):
-    def get(self,req,id):
+    def get(self,req,pk):
         try:
-            book = Book.objects.get(pk=id)
+            book = Book.objects.get(pk=pk)
         except:
             return Response({'Error': "Book not found"}, status=status.HTTP_404_NOT_FOUND)
-        cereal = BookSerializer(book)
+        cereal = BookSerializer(book, context={'request': req})
         return Response(cereal.data)
 
-    def put(self,req,id):
+    def put(self,req,pk):
         try:
-            book = Book.objects.get(pk=id)
+            book = Book.objects.get(pk=pk)
         except:
             return Response({'Error': "Book not found"}, status=status.HTTP_404_NOT_FOUND)
         cereal = BookSerializer(book, data=req.data)
@@ -84,9 +84,9 @@ class BookDetail(APIView):
         else:
             return Response(cereal.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self,req,id):
+    def delete(self,req,pk):
         try:
-            book = Book.objects.get(pk=id)
+            book = Book.objects.get(pk=pk)
         except:
             return Response({'Error': "Book not found"}, status=status.HTTP_404_NOT_FOUND)
         book.delete()
@@ -96,7 +96,7 @@ class BookDetail(APIView):
 class LoanList(APIView):
     def get(self,req):
         loans = Loan.objects.all()
-        cereal = LoanSerializer(loans, many=True)
+        cereal = LoanSerializer(loans, many=True, context={'request': req})
         return Response(cereal.data)
 
     def post(self,req):
@@ -108,17 +108,17 @@ class LoanList(APIView):
             return Response(cereal.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoanDetail(APIView):
-    def get(self,req,id):
+    def get(self,req,pk):
         try:
-            loan = Loan.objects.get(pk=id)
+            loan = Loan.objects.get(pk=pk)
         except:
             return Response({'Error': "Loan not found"}, status=status.HTTP_404_NOT_FOUND)
-        cereal = LoanSerializer(loan)
+        cereal = LoanSerializer(loan, context={'request': req})
         return Response(cereal.data)
 
-    def put(self,req,id):
+    def put(self,req,pk):
         try:
-            loan = Loan.objects.get(pk=id)
+            loan = Loan.objects.get(pk=pk)
         except:
             return Response({'Error': "Loan not found"}, status=status.HTTP_404_NOT_FOUND)
         cereal = LoanSerializer(loan, data=req.data)
@@ -128,9 +128,9 @@ class LoanDetail(APIView):
         else:
             return Response(cereal.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self,req,id):
+    def delete(self,req,pk):
         try:
-            loan = Loan.objects.get(pk=id)
+            loan = Loan.objects.get(pk=pk)
         except:
             return Response({'Error': "Loan not found"}, status=status.HTTP_404_NOT_FOUND)
         loan.delete()
@@ -155,9 +155,9 @@ def authors(req):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def author(req, id):
+def author(req, pk):
     try:
-        author = Author.objects.get(pk=id)
+        author = Author.objects.get(pk=pk)
     except:
         return Response({'Error': "Author not found"}, status=status.HTTP_404_NOT_FOUND)
     match req.method:
