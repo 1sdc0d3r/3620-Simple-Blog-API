@@ -20,6 +20,7 @@ class Loan(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='loan', null=True)
     borrower = models.CharField(("borrower"), max_length=100)
     loan_date = models.CharField(("loan_date"), max_length=50)
+    # loan_date = models.DateTimeField(auto_now=True)
 
 
     def __str__(self):
