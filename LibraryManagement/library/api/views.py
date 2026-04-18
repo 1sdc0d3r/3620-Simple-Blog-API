@@ -8,7 +8,7 @@ from library.api.serializers import AuthorSerializer, BookSerializer, LoanSerial
 class AuthorList(APIView):
     def get(self,req):
         authors = Author.objects.all()
-        cereal = AuthorSerializer(authors, many=True)
+        cereal = AuthorSerializer(authors, many=True,context={'request': req})
         return Response(cereal.data)
 
     def post(self,req):
@@ -25,7 +25,7 @@ class AuthorDetail(APIView):
             author = Author.objects.get(pk=pk)
         except:
             return Response({'Error': "Author not found"}, status=status.HTTP_404_NOT_FOUND)
-        cereal = AuthorSerializer(author)
+        cereal = AuthorSerializer(author, context={'request': req})
         return Response(cereal.data)
 
     def put(self,req,pk):

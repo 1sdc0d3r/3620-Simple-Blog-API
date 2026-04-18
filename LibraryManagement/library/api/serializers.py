@@ -20,7 +20,9 @@ class BookSerializer(serializers.ModelSerializer):
 
 class AuthorSerializer(serializers.ModelSerializer):
     name_len = serializers.SerializerMethodField()
-    book = serializers.StringRelatedField(many=True, read_only=True)
+    book = serializers.HyperlinkedRelatedField(
+        many=True, read_only=True, view_name='book-detail'
+    )
 
     class Meta:
         model = Author
