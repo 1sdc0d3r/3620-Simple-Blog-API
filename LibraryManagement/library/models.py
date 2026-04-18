@@ -22,6 +22,5 @@ class Loan(models.Model):
     loan_date = models.CharField(("loan_date"), max_length=50)
     # loan_date = models.DateTimeField(auto_now=True)
 
-
     def __str__(self):
         return self.borrower
