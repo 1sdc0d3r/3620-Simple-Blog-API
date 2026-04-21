@@ -25,7 +25,7 @@ SECRET_KEY = 'g7v9#kL2!pQx8ZrT4uWmE6y@B1cD3fHjK5nP0sVqXzA8tR2wY9uM'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.fly.dev','librarymanagement.fly.dev','localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.fly.dev','librarymanagement.fly.dev','.herokuapp.com','localhost', '127.0.0.1']
 
 
 # Application definition
@@ -116,6 +116,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
+STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = 'static/'
 
 # Hosting vars
